@@ -107,10 +107,14 @@ var timeItems = function () {
                 .find(".textBox")
                 .addClass("past-item")
 
-            console.log(check)
-
-        } else {
-            console.log("no")
+        } else if (currentTime < theTime) {
+            check = $(this)
+                .find(".textBox")
+                .addClass("future-item")
+        } else if (currentTime === theTime) {
+            check = $(this)
+            .find(".textBox")
+            .addClass("current-item")
         }
     })
 }
