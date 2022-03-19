@@ -77,3 +77,15 @@ textarea{
 .textBox {
   height: 80px;
 }
+
+.current-item {
+  background-color: teal;
+}
+
+.past-item {
+  background-color: grey;
+}
+
+.future-item {
+  background-color: #77dd77;
+}

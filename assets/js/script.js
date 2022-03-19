@@ -1,11 +1,9 @@
 // create object to save calendar items
-var savedItems = {
-    "9AM": "",
-    "10AM": "",
-    "11AM": ""
-};
+var savedItems = {};
 
 var today = moment().format("dddd, MMMM Do");
+var currentTime = parseInt(moment().format('H'))
+console.log(currentTime);
 
 // find p element in header and add current day to it
 $("#currentDay")
@@ -47,7 +45,8 @@ var confirmItem = function(text, id){
 $(".textBox").on("blur", "textarea", confirmItem)
 
 var saveItem = function(event) {
-    $(".textBox").trigger("blur")
+    console.log(savedItems);
+
     var selectedParent =$(event.target)
         .closest(".row")
 
@@ -62,7 +61,8 @@ var saveItem = function(event) {
     console.log(selectedText)
     console.log(selectedTime)
     
-    savedItems[selectedTime] = selectedText;
+    savedItems[selectedTime] = selectedText
+
     console.log(savedItems);
     localStorage.setItem("items", JSON.stringify(savedItems))
 
@@ -70,36 +70,49 @@ var saveItem = function(event) {
 
 var loadItems = function () {
     var savedItems = JSON.parse(localStorage.getItem("items"))
-    console.log(savedItems);
 
-    if (!savedItems) {
-        savedItems = {
-            "9AM": "",
-            "10AM": "",
-            "11AM": ""
-        };
-    }
+    // if (!savedItems) {
+    //     savedItems = [];
+    // }
 
 
     $.each(savedItems, function(list, arr) {
-        console.log(list, arr);
-        var text = arr;
-        var time = list;
-        
-        var id = time;
 
-        var test = $("#" + id)
+        var test = $("#" + list)
             .find(".textBox")
             .children("p")
-            .text(text);
+            .text(arr);
 
-
-        
-        console.log(test)
     })
-
 }
 
 $(".saveBtn").on("click", saveItem);
 
 loadItems();
+
+var timeItems = function () {
+    var selection = $(".row").each(function() {
+        
+        var theTime = parseInt($(this)
+            .attr("id"))
+        
+        console.log(theTime)
+
+        
+        
+        if(currentTime > theTime) {
+            console.log("yes")
+            
+            check = $(this)
+                .find(".textBox")
+                .addClass("past-item")
+
+            console.log(check)
+
+        } else {
+            console.log("no")
+        }
+    })
+}
+
+timeItems();
