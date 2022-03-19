@@ -72,11 +72,6 @@ var saveItem = function () {
 
 var loadItems = function () {
     savedItems = JSON.parse(localStorage.getItem("items"))
-    console.log(savedItems);
-    // if (!savedItems) {
-    //     savedItems = {};
-    // }
-
 
     $.each(savedItems, function(list, arr) {
 
@@ -116,3 +111,6 @@ var timeItems = function () {
 }
 
 timeItems();
+
+// interval to check item times every 30 minutes
+setInterval(timeItems, (60*1000)*30)
