@@ -3,7 +3,7 @@ var savedItems = {};
 
 var today = moment().format("dddd, MMMM Do");
 var currentTime = parseInt(moment().format('H'))
-console.log(currentTime);
+
 
 // find p element in header and add current day to it
 $("#currentDay")
@@ -44,7 +44,8 @@ var confirmItem = function(text, id){
 
 $(".textBox").on("blur", "textarea", confirmItem)
 
-var saveItem = function(event) {
+var saveButton = function(event) {
+
     console.log(savedItems);
 
     var selectedParent =$(event.target)
@@ -57,22 +58,23 @@ var saveItem = function(event) {
         .children(".textBox")
         .children("p")
         .text()
-
-    console.log(selectedText)
-    console.log(selectedTime)
     
     savedItems[selectedTime] = selectedText
+    console.log(savedItems)
 
-    console.log(savedItems);
-    localStorage.setItem("items", JSON.stringify(savedItems))
+    saveItem(savedItems);
 
 }
 
-var loadItems = function () {
-    var savedItems = JSON.parse(localStorage.getItem("items"))
+var saveItem = function () {
+    localStorage.setItem("items", JSON.stringify(savedItems))
+}
 
+var loadItems = function () {
+    savedItems = JSON.parse(localStorage.getItem("items"))
+    console.log(savedItems);
     // if (!savedItems) {
-    //     savedItems = [];
+    //     savedItems = {};
     // }
 
 
@@ -86,7 +88,8 @@ var loadItems = function () {
     })
 }
 
-$(".saveBtn").on("click", saveItem);
+$(".saveBtn").on("click", saveButton);
+
 
 loadItems();
 
@@ -95,18 +98,11 @@ var timeItems = function () {
         
         var theTime = parseInt($(this)
             .attr("id"))
-        
-        console.log(theTime)
 
-        
-        
-        if(currentTime > theTime) {
-            console.log("yes")
-            
+        if(currentTime > theTime) {       
             check = $(this)
                 .find(".textBox")
                 .addClass("past-item")
-
         } else if (currentTime < theTime) {
             check = $(this)
                 .find(".textBox")
