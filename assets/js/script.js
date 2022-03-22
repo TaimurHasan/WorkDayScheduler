@@ -73,6 +73,10 @@ var saveItem = function () {
 var loadItems = function () {
     savedItems = JSON.parse(localStorage.getItem("items"))
 
+    if(!savedItems) {
+        savedItems = {};
+    }
+    
     $.each(savedItems, function(list, arr) {
 
         var test = $("#" + list)
